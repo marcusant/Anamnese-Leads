@@ -84,7 +84,7 @@ function notify_(data, waLink) {
     'WhatsApp: ' + (data.codigo_pais || '') + ' ' + (data.whatsapp || '-'),
     'Objetivo: ' + (data.objetivo || '-') + ' (prazo: ' + (data.prazo || '-') + ')',
     'Onde treina: ' + (data.local_treino || '-') + ' · ' + (data.frequencia_semanal || '-') + ' dias/semana',
-    'Acompanhamento: ' + (data.acompanhamento || '-') + ' · Orçamento: ' + (data.orcamento || '-'),
+    'Acompanhamento: ' + (data.acompanhamento || '-'),
     'Prioridade (1-10): ' + (data.prioridade || '-'),
     'Lesões: ' + (data.lesoes_anteriores || 'Nenhuma'),
     '',

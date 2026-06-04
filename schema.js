@@ -111,8 +111,6 @@ export const STEPS = [
       { key: 'prioridade', label: 'Quanto este objetivo é prioridade hoje?', type: 'slider', required: true, min: 1, max: 10, default: 7, labels: ['Pouco', 'Muito'] },
       { key: 'acompanhamento', label: 'Preferes acompanhamento próximo ou só o plano para executar sozinho?', type: 'radio', required: true,
         options: ['Acompanhamento próximo', 'Só o plano'] },
-      { key: 'orcamento', label: 'Que investimento mensal faz sentido para ti?', type: 'radio',
-        options: ['Económico (até €150)', 'Moderado (€150-300)', 'Confortável (€300-500)', 'Sem restrição'] },
       { key: 'observacoes', label: 'Algo mais que queiras partilhar?', type: 'textarea', placeholder: 'Opcional' },
       { key: 'consentimento', label: 'Declaro que as informações são verdadeiras e entendo que devo procurar liberação médica caso tenha qualquer condição de saúde.', type: 'consent', required: true },
     ],
