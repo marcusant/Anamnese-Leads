@@ -10,7 +10,7 @@ export const CONFIG = {
   // ── Google Apps Script (driver 'sheets') ───────────────────────
   // Cola aqui a URL do Web App depois de fazer "Implementar" no Apps Script.
   // Ver README.md → secção "Deploy do Apps Script".
-  APPS_SCRIPT_URL: 'COLE_AQUI_A_URL_DO_APPS_SCRIPT',
+  APPS_SCRIPT_URL: 'https://script.google.com/macros/s/AKfycbzpgwmnLuax05LXmI4clrNt8Omcxaig9-T5At1YvF31EhVDf-xfjMVQcS4BFAn_mIEk/exec',
 
   // ── Supabase (driver 'supabase', futuro) ────────────────────────
   SUPABASE_URL: '',
