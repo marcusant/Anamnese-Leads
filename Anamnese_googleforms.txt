@@ -1,0 +1,138 @@
+function criarAnamnese() {
+  // Cria o formulário
+  const form = FormApp.create('Avaliação Física e Diagnóstico de Treino');
+  form.setDescription('Responda com calma e sinceridade. Essas informações são a base pra eu montar um plano de treino realmente personalizado pra você. Leva ~5 minutos.');
+  form.setCollectEmail(false);
+
+  // ===== SEÇÃO 1 — IDENTIFICAÇÃO =====
+  form.addSectionHeaderItem().setTitle('1. Identificação');
+
+  // E-mail no topo (campo de texto, obrigatório, com validação de formato)
+  const email = form.addTextItem().setTitle('E-mail').setRequired(true);
+  email.setValidation(
+    FormApp.createTextValidation()
+      .setHelpText('Insira um e-mail válido. Ex: nome@dominio.com')
+      .requireTextIsEmail()
+      .build()
+  );
+
+  form.addTextItem().setTitle('Nome completo').setRequired(true);
+  form.addDateItem().setTitle('Data de nascimento').setRequired(true);
+  form.addMultipleChoiceItem().setTitle('Sexo')
+    .setChoiceValues(['Masculino', 'Feminino', 'Prefiro não informar']).setRequired(true);
+  form.addTextItem().setTitle('Peso (kg)').setRequired(true);
+  form.addTextItem().setTitle('Altura (ex: 1.70 m)').setRequired(true);
+  form.addTextItem().setTitle('Nacionalidade').setRequired(true);
+  form.addTextItem().setTitle('Profissão e rotina de trabalho (ex: sentado, em pé, turnos)');
+  form.addTextItem().setTitle('Cidade de residência').setRequired(true);
+  form.addTextItem().setTitle('País de residência').setRequired(true);
+
+  // Dropdown minimalista (ListItem) para código do país
+  form.addListItem().setTitle('Código do país (indicativo)')
+    .setChoiceValues([
+      '+351 (Portugal)',
+      '+55 (Brasil)',
+      '+34 (Espanha)',
+      '+44 (Reino Unido)',
+      '+1 (EUA / Canadá)',
+      '+33 (França)',
+      '+49 (Alemanha)',
+      '+41 (Suíça)',
+      'Outro'
+    ]).setRequired(true);
+
+  // Campo de fallback para "Outro"
+  form.addTextItem().setTitle('Se marcou "Outro", informe o código do país')
+    .setHelpText('Ex: +244 (Angola), +258 (Moçambique). Deixe em branco se já selecionou acima.')
+    .setRequired(false);
+
+  form.addTextItem().setTitle('Número de telefone / WhatsApp (sem o código do país)').setRequired(true);
+
+  // ===== SEÇÃO 2 — OBJETIVO =====
+  form.addPageBreakItem().setTitle('2. Seu Objetivo');
+  form.addMultipleChoiceItem().setTitle('Qual seu principal objetivo?')
+    .setChoiceValues(['Emagrecer', 'Ganhar massa muscular', 'Condicionamento', 'Saúde geral', 'Estética', 'Performance']).setRequired(true);
+  form.addParagraphTextItem().setTitle('Por que esse objetivo agora? O que mudou?').setRequired(true);
+  form.addParagraphTextItem().setTitle('Já tentou antes? O que funcionou e o que não funcionou?');
+  form.addMultipleChoiceItem().setTitle('Em quanto tempo gostaria de ver resultado?')
+    .setChoiceValues(['1 mês', '3 meses', '6 meses', 'Sem pressa']);
+
+  // ===== SEÇÃO 3 — HISTÓRICO DE SAÚDE =====
+  form.addPageBreakItem().setTitle('3. Histórico de Saúde');
+  form.addParagraphTextItem().setTitle('Tem alguma lesão atual ou passada? Qual?');
+  form.addCheckboxItem().setTitle('Tem alguma condição médica?')
+    .setChoiceValues(['Hipertensão', 'Diabetes', 'Cardíaca', 'Hérnia', 'Respiratória', 'Nenhuma', 'Outra']);
+  form.addTextItem().setTitle('Usa medicação contínua? Qual?');
+  form.addMultipleChoiceItem().setTitle('Tem liberação médica para atividade física?')
+    .setChoiceValues(['Sim', 'Não', 'Não preciso']);
+  form.addParagraphTextItem().setTitle('Sente dor em algum movimento específico?');
+  form.addMultipleChoiceItem().setTitle('(Se mulher) Está gestante ou em pós-parto recente?')
+    .setChoiceValues(['Sim', 'Não', 'Não se aplica']);
+
+  // ===== SEÇÃO 4 — HISTÓRICO DE TREINO =====
+  form.addPageBreakItem().setTitle('4. Histórico de Treino');
+  form.addMultipleChoiceItem().setTitle('Você já treina ou está começando do zero?')
+    .setChoiceValues(['Começando do zero', 'Já treino']).setRequired(true);
+  form.addTextItem().setTitle('Há quanto tempo treina?');
+  form.addMultipleChoiceItem().setTitle('Como avalia seu nível?')
+    .setChoiceValues(['Iniciante', 'Intermediário', 'Avançado']);
+  form.addCheckboxItem().setTitle('Que tipos de treino já praticou?')
+    .setChoiceValues(['Musculação', 'Funcional', 'Corrida', 'Crossfit', 'Outros', 'Nenhum']);
+
+  // ===== SEÇÃO 5 — LOGÍSTICA E DISPONIBILIDADE =====
+  form.addPageBreakItem().setTitle('5. Logística e Disponibilidade');
+  form.addMultipleChoiceItem().setTitle('Onde vai treinar?')
+    .setChoiceValues([
+      'Ginásio',
+      'Casa',
+      'Ar livre',
+      'Misto: Ginásio e ar livre',
+      'Misto: Casa e ar livre',
+      'Misto: Ginásio e casa'
+    ]).setRequired(true);
+  form.addParagraphTextItem().setTitle('Quais equipamentos tem disponíveis?');
+  form.addMultipleChoiceItem().setTitle('Quantos dias por semana consegue treinar?')
+    .setChoiceValues(['2', '3', '4', '5', '6']).setRequired(true);
+  form.addMultipleChoiceItem().setTitle('Quanto tempo por sessão?')
+    .setChoiceValues(['30 min', '45 min', '60 min', '+60 min']);
+  form.addMultipleChoiceItem().setTitle('Qual horário costuma treinar?')
+    .setChoiceValues(['Manhã', 'Tarde', 'Noite', 'Varia']);
+
+  // ===== SEÇÃO 6 — ESTILO DE VIDA =====
+  form.addPageBreakItem().setTitle('6. Estilo de Vida');
+  form.addScaleItem().setTitle('Como avalia a qualidade do seu sono?')
+    .setBounds(1, 10).setLabels('Muito ruim', 'Excelente');
+  const horasSono = form.addTextItem().setTitle('Quantas horas dorme por noite, em média?');
+  horasSono.setHelpText('Ex: 6 a 7 horas, costumo acordar cansado');
+  const alimentacao = form.addParagraphTextItem().setTitle('Como descreveria sua alimentação hoje?');
+  alimentacao.setHelpText('Ex: Faço 3 refeições, como muito fora de casa, pulo o café da manhã, bebo pouca água e exagero em doces à noite');
+  form.addScaleItem().setTitle('Nível de estresse no dia a dia')
+    .setBounds(1, 10).setLabels('Baixo', 'Alto');
+  form.addMultipleChoiceItem().setTitle('Consome álcool?')
+    .setChoiceValues(['Não', 'Socialmente', 'Frequentemente']);
+  form.addMultipleChoiceItem().setTitle('Fuma?')
+    .setChoiceValues(['Não', 'Às vezes', 'Sim, diariamente']);
+
+  // ===== SEÇÃO 7 — COMPROMISSO =====
+  form.addPageBreakItem().setTitle('7. Compromisso');
+  form.addScaleItem().setTitle('Quanto esse objetivo é prioridade hoje?')
+    .setBounds(1, 10).setLabels('Pouco', 'Muito').setRequired(true);
+  form.addParagraphTextItem().setTitle('O que acontece na sua vida se você NÃO mudar isso?');
+  form.addMultipleChoiceItem().setTitle('Prefere acompanhamento próximo ou só o plano pra executar sozinho?')
+    .setChoiceValues(['Acompanhamento próximo', 'Só o plano']);
+
+  // ===== SEÇÃO 8 — CONSENTIMENTO =====
+  form.addPageBreakItem().setTitle('8. Consentimento');
+  form.addCheckboxItem().setTitle('Declaro que as informações são verdadeiras e entendo que devo buscar liberação médica caso tenha qualquer condição de saúde.')
+    .setChoiceValues(['Li e concordo']).setRequired(true);
+
+  // Cria e vincula a planilha de respostas
+  const ss = SpreadsheetApp.create('Respostas - Anamnese de Treino');
+  form.setDestination(FormApp.DestinationType.SPREADSHEET, ss.getId());
+
+  // Imprime os links no log
+  Logger.log('✅ FORMULÁRIO CRIADO!');
+  Logger.log('🔗 Link para responder: ' + form.getPublishedUrl());
+  Logger.log('✏️ Link para editar: ' + form.getEditUrl());
+  Logger.log('📊 Planilha de respostas: ' + ss.getUrl());
+}

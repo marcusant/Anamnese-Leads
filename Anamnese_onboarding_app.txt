@@ -1,0 +1,751 @@
+# 📋 Perguntas e Etapas da Anamnese Completa — TRINUS-APP
+
+
+
+Este documento lista detalhadamente todas as etapas, perguntas, campos e opções de resposta integrados no formulário de **Anamnese Completa** (`components/forms/AnamneseFormWizard.tsx`) do sistema **TRINUS-APP**.
+
+
+
+O questionário está estruturado em **7 Etapas (Passos)**, implementados num assistente dinâmico (Wizard) com salvamento em base de dados (Supabase) e validação de dados em tempo de execução.
+
+
+
+---
+
+
+
+## 🗂️ Índice das Etapas
+
+1. [🏋️ Passo 1: Histórico de Treino](#-passo-1-histórico-de-treino) — Frequência e experiência prévia.
+
+2. [📏 Passo 2: Medidas Corporais](#-passo-2-medidas-corporais) — Altura, peso e circunferências básicas.
+
+3. [🩺 Passo 3: Saúde](#-passo-3-saúde) — Lesões, dores, patologias e medicamentos.
+
+4. [⏰ Passo 4: Rotina & Lifestyle](#-passo-4-rotina--lifestyle) — Sono, stress, horários e tipo de trabalho.
+
+5. [🥗 Passo 5: Alimentação](#-passo-5-alimentação) — Hidratação, refeições, alergias, restrições e suplementação.
+
+6. [⭐ Passo 6: Preferências de Treino](#-passo-6-preferências-de-treino) — Local de treino, exercícios prediletos/indesejados e materiais.
+
+7. [🎯 Passo 7: Motivação & Compromisso](#-passo-7-motivação--compromisso) — Dificuldades, metas subjetivas e foco.
+
+
+
+---
+
+
+
+## 🏋️ Passo 1: Histórico de Treino
+
+* **Objetivo**: Avaliar o nível de experiência motora e a consistência prévia do aluno.
+
+
+
+### 1.1. Há quanto tempo treinas? (em meses)
+
+* **Campo**: Número (`tempo_treino_meses`)
+
+* **Validação**: Opcional (valores `>= 0`).
+
+* **Instrução / Placeholder**: `"0 = nunca treinei"`
+
+
+
+### 1.2. Frequência anterior (dias por semana)
+
+* **Campo**: Número (`frequencia_anterior`)
+
+* **Validação**: Opcional (valores de `0` a `7`).
+
+* **Instrução / Placeholder**: Introduzir dias disponíveis.
+
+
+
+### 1.3. Modalidades que já praticaste
+
+* **Campo**: Seleção Múltipla com Chips (`modalidades_previas`)
+
+* **Validação**: Opcional.
+
+* **Opções Disponíveis**:
+
+  * `Musculação`
+
+  * `Crossfit`
+
+  * `Funcional`
+
+  * `Pilates`
+
+  * `Yoga`
+
+  * `Natação`
+
+  * `Corrida`
+
+  * `Ciclismo`
+
+  * `Artes Marciais`
+
+  * `Dança`
+
+  * `HIIT`
+
+  * `Calistenia`
+
+  * `Outro`
+
+
+
+---
+
+
+
+## 📏 Passo 2: Medidas Corporais
+
+* **Objetivo**: Obter métricas físicas de ponto de partida (baseline) para prescrição fisiológica e acompanhamento de evolução.
+
+
+
+### 2.1. Altura (cm) ⚠️
+
+* **Campo**: Número inteiro (`altura_cm`)
+
+* **Validação**: **Obrigatório** (`*`).
+
+* **Instrução / Placeholder**: `"Ex: 175"`
+
+
+
+### 2.2. Peso atual (kg) ⚠️
+
+* **Campo**: Número decimal / float (`peso_avaliacao`)
+
+* **Validação**: **Obrigatório** (`*`).
+
+* **Instrução / Placeholder**: `"Ex: 75.5"`
+
+
+
+### 2.3. Percentual de Gordura (%)
+
+* **Campo**: Número decimal / float (`percentual_gordura`)
+
+* **Validação**: Opcional.
+
+* **Instrução / Placeholder**: `"Ex: 18"`
+
+
+
+### 2.4. Circunferência da Cintura (cm)
+
+* **Campo**: Número decimal / float (`circunferencia_cintura`)
+
+* **Validação**: Opcional.
+
+* **Instrução / Placeholder**: `"Ex: 80"`
+
+
+
+### 2.5. Circunferência do Quadril (cm)
+
+* **Campo**: Número decimal / float (`circunferencia_quadril`)
+
+* **Validação**: Opcional.
+
+* **Instrução / Placeholder**: `"Ex: 95"`
+
+
+
+---
+
+
+
+## 🩺 Passo 3: Saúde
+
+* **Objetivo**: Rastreio de segurança clínico-desportiva, identificação de limitações ortopédicas e precauções médicas.
+
+
+
+### 3.1. Lesões anteriores ⚠️
+
+* **Campo**: Seleção Múltipla com Chips (`lesoes_anteriores`)
+
+* **Validação**: **Obrigatório** (`*`) (Selecionar lesões ou "Nenhuma").
+
+* **Estilo Visual**: Destaque a Vermelho quando selecionado.
+
+* **Opções Disponíveis**:
+
+  * `Ombro`
+
+  * `Joelho`
+
+  * `Lombar`
+
+  * `Cervical`
+
+  * `Tornozelo`
+
+  * `Punho`
+
+  * `Quadril`
+
+  * `Cotovelo`
+
+  * `Nenhuma`
+
+
+
+### 3.2. Dores atuais ⚠️
+
+* **Campo**: Seleção Múltipla com Chips (`dores_atuais`)
+
+* **Validação**: **Obrigatório** (`*`) (Selecionar dores ou "Nenhuma").
+
+* **Estilo Visual**: Destaque a Laranja quando selecionado.
+
+* **Opções Disponíveis**:
+
+  * `Lombar`
+
+  * `Cervical`
+
+  * `Joelho`
+
+  * `Ombro`
+
+  * `Cabeça`
+
+  * `Punho`
+
+  * `Quadril`
+
+  * `Nenhuma`
+
+
+
+### 3.3. Medicamentos em uso
+
+* **Campo**: Texto Livre (`medicamentos`) — convertido em array por vírgulas.
+
+* **Validação**: Opcional.
+
+* **Instrução / Placeholder**: `"Ex: Omeprazol, Losartana (separados por vírgula)"`
+
+
+
+### 3.4. Restrições médicas ou observações adicionais
+
+* **Campo**: Área de Texto / Textarea (`restricoes_medicas`)
+
+* **Validação**: Opcional.
+
+* **Instrução / Placeholder**: `"Ex: Hérnia de disco, evitar impacto..."`
+
+
+
+---
+
+
+
+## ⏰ Passo 4: Rotina & Lifestyle
+
+* **Objetivo**: Mapear ritmos circadianos, stress psicológico e agenda para enquadramento perfeito das prescrições.
+
+
+
+### 4.1. Horas de sono (média diária)
+
+* **Campo**: Número decimal/float (`horas_sono_media`)
+
+* **Validação**: Opcional (passo de `0.5`, de `0` a `12`).
+
+* **Instrução / Placeholder**: `"Ex: 7"`
+
+
+
+### 4.2. Tipo de trabalho / Atividade diária
+
+* **Campo**: Menu de Opção Única / Dropdown (`trabalho_tipo`)
+
+* **Validação**: Opcional.
+
+* **Opções Disponíveis**:
+
+  * 🖥️ `Sedentário (escritório)` (`sedentario`)
+
+  * 🚶 `Atividade Leve` (`leve`)
+
+  * 🏃 `Moderado (em pé, caminha)` (`moderado`)
+
+  * 🏋️ `Ativo (trabalho físico)` (`ativo`)
+
+  * 🏠 `Remoto/Home office` (`remoto`)
+
+
+
+### 4.3. Horário de acordar
+
+* **Campo**: Seletor de Hora (`horario_acordar`)
+
+* **Validação**: Opcional (formato `HH:MM`).
+
+
+
+### 4.4. Horário de dormir
+
+* **Campo**: Seletor de Hora (`horario_dormir`)
+
+* **Validação**: Opcional (formato `HH:MM`).
+
+
+
+### 4.5. Melhor horário para treinar
+
+* **Campo**: Menu de Opção Única / Dropdown (`horario_treino`)
+
+* **Validação**: Opcional.
+
+* **Opções Disponíveis**:
+
+  * 🌅 `Manhã cedo (6h-8h)` (`manha_cedo`)
+
+  * ☀️ `Manhã (8h-12h)` (`manha`)
+
+  * 🥗 `Hora de almoço (12h-14h)` (`almoco`)
+
+  * 🌇 `Tarde (14h-18h)` (`tarde`)
+
+  * 🌃 `Noite (18h-21h)` (`noite`)
+
+  * 🌌 `Noite tarde (21h+)` (`noite_tarde`)
+
+  * 🔄 `Flexível` (`flexivel`)
+
+
+
+### 4.6. Nível de stress
+
+* **Campo**: Slider / Escala de 1 a 5 (`nivel_stress`)
+
+* **Valor Padrão**: `3`
+
+* **Legendas extremas**: `"Tranquilo"` (1) ➡️ `"Muito stressado"` (5)
+
+
+
+### 4.7. Nível de energia geral
+
+* **Campo**: Slider / Escala de 1 a 5 (`nivel_energia`)
+
+* **Valor Padrão**: `3`
+
+* **Legendas extremas**: `"Sem energia"` (1) ➡️ `"Muita energia"` (5)
+
+
+
+---
+
+
+
+## 🥗 Passo 5: Alimentação
+
+* **Objetivo**: Compreensão integral dos hábitos alimentares, alergias de segurança e restrições para planeamento nutricional.
+
+
+
+### 5.1. Refeições por dia
+
+* **Campo**: Número inteiro (`refeicoes_dia`)
+
+* **Validação**: Opcional (limites de `1` a `10`).
+
+* **Instrução / Placeholder**: `"Ex: 4"`
+
+
+
+### 5.2. Consumo de água diário (litros)
+
+* **Campo**: Número decimal/float (`consumo_agua_litros`)
+
+* **Validação**: Opcional (passo de `0.5`, de `0` a `10`).
+
+* **Instrução / Placeholder**: `"Ex: 2"`
+
+
+
+### 5.3. Restrições alimentares
+
+* **Campo**: Seleção Múltipla com Chips (`restricoes_alimentares`)
+
+* **Estilo Visual**: Destaque a Laranja quando selecionado.
+
+* **Opções Disponíveis**:
+
+  * `Vegetariano`
+
+  * `Vegano`
+
+  * `Sem Glúten`
+
+  * `Sem Lactose`
+
+  * `Low Carb`
+
+  * `Kosher`
+
+  * `Halal`
+
+  * `Nenhuma`
+
+
+
+### 5.4. Alergias alimentares ⚠️
+
+* **Campo**: Seleção Múltipla com Chips (`alergias_alimentares`)
+
+* **Validação**: **Obrigatório** (`*`) (Selecionar alergias ou "Nenhuma").
+
+* **Estilo Visual**: Destaque a Vermelho quando selecionado.
+
+* **Opções Disponíveis**:
+
+  * `Amendoim`
+
+  * `Frutos do Mar`
+
+  * `Ovo`
+
+  * `Leite`
+
+  * `Soja`
+
+  * `Trigo`
+
+  * `Nozes`
+
+  * `Nenhuma`
+
+
+
+### 5.5. Preferências alimentares
+
+* **Campo**: Seleção Múltipla com Chips (`preferencias_alimentares`)
+
+* **Estilo Visual**: Destaque a Verde quando selecionado.
+
+* **Opções Disponíveis**:
+
+  * `Comida Caseira`
+
+  * `Meal Prep`
+
+  * `Delivery Saudável`
+
+  * `Refeições Rápidas`
+
+  * `Cozinhar Elaborado`
+
+
+
+### 5.6. Alimentos que não gostas / rejeitas
+
+* **Campo**: Texto Livre (`alimentos_nao_gosta`) — convertido em array por vírgulas.
+
+* **Validação**: Opcional.
+
+* **Instrução / Placeholder**: `"Ex: Fígado, Beterraba, Couve-flor (separados por vírgula)"`
+
+
+
+### 5.7. Suplementos que usas atualmente
+
+* **Campo**: Seleção Múltipla com Chips (`suplementos_atuais`)
+
+* **Estilo Visual**: Destaque a Azul quando selecionado.
+
+* **Opções Disponíveis**:
+
+  * `Whey Protein`
+
+  * `Creatina`
+
+  * `BCAA`
+
+  * `Pré-treino`
+
+  * `Multivitamínico`
+
+  * `Ômega 3`
+
+  * `Cafeína`
+
+  * `Glutamina`
+
+  * `Nenhum`
+
+
+
+### 5.8. Objetivo nutricional ⚠️
+
+* **Campo**: Menu de Opção Única / Dropdown (`objetivo_nutricional`)
+
+* **Validação**: **Obrigatório** (`*`).
+
+* **Opções Disponíveis**:
+
+  * 📉 `Perda de peso` (`perda_peso`)
+
+  * 💪 `Ganho de massa muscular` (`ganho_massa`)
+
+  * ⚖️ `Manutenção` (`manutencao`)
+
+  * 🏆 `Performance esportiva` (`performance`)
+
+  * ❤️ `Saúde geral` (`saude`)
+
+  * 🔄 `Recomposição corporal` (`recomposicao`)
+
+
+
+### 5.9. Orçamento estimado para alimentação
+
+* **Campo**: Menu de Opção Única / Dropdown (`orcamento_alimentacao`)
+
+* **Validação**: Opcional.
+
+* **Opções Disponíveis**:
+
+  * 🪙 `Económico (até €150/mês)` (`economico`)
+
+  * 💳 `Moderado (€150-300/mês)` (`moderado`)
+
+  * 💎 `Confortável (€300-500/mês)` (`confortavel`)
+
+  * ♾️ `Sem restrição` (`sem_restricao`)
+
+
+
+### 5.10. Tens cozinha própria e capacidade para preparar refeições?
+
+* **Campo**: Interruptor Booleano (`cozinha_propria`)
+
+* **Validação**: Opcional.
+
+* **Opções**: `Sim` / `Não`
+
+
+
+### 5.11. Tempo disponível diário para preparar refeições (minutos)
+
+* **Campo**: Número inteiro (`tempo_preparacao_minutos`)
+
+* **Validação**: Opcional.
+
+* **Instrução / Placeholder**: `"minutos"`
+
+
+
+### 5.12. Frequência com que comes refeições fora de casa (por semana)
+
+* **Campo**: Número inteiro (`frequencia_come_fora`)
+
+* **Validação**: Opcional (valores de `0` a `21`).
+
+* **Instrução / Placeholder**: `"Ex: 2"`
+
+
+
+---
+
+
+
+## ⭐ Passo 6: Preferências de Treino
+
+* **Objetivo**: Alinhamento de gostos mecânicos e equipamentos viáveis para garantir alta aderência ao plano.
+
+
+
+### 6.1. Onde vais treinar? ⚠️
+
+* **Campo**: Botões de Opção Única (`local_treino`)
+
+* **Validação**: **Obrigatório** (`*`).
+
+* **Opções Disponíveis**:
+
+  * 🏋️ `Ginásio` (`ginasio`)
+
+  * 🏠 `Casa` (`casa`)
+
+  * 🌳 `Ar Livre` (`ar_livre`)
+
+  * 🔄 `Misto (varia)` (`misto`)
+
+
+
+### 6.2. Exercícios favoritos
+
+* **Campo**: Seleção Múltipla com Chips (`exercicios_favoritos`)
+
+* **Estilo Visual**: Destaque a Verde quando selecionado.
+
+* **Opções Disponíveis**:
+
+  * `Agachamento`
+
+  * `Supino`
+
+  * `Levantamento Terra`
+
+  * `Remada`
+
+  * `Pull-up`
+
+  * `Leg Press`
+
+  * `Desenvolvimento`
+
+  * `Rosca Bíceps`
+
+  * `Tríceps`
+
+  * `Abdominais`
+
+  * `Cardio`
+
+  * `Funcional`
+
+  * `Stiff`
+
+  * `Afundo`
+
+
+
+### 6.3. Exercícios a evitar / que não gostas
+
+* **Campo**: Seleção Múltipla com Chips (`exercicios_evitar`)
+
+* **Estilo Visual**: Destaque a Vermelho quando selecionado.
+
+* **Opções Disponíveis**: *A mesma lista de Exercícios Populares acima.*
+
+
+
+### 6.4. Equipamentos disponíveis
+
+* **Campo**: Seleção Múltipla com Chips (`equipamentos_disponiveis`)
+
+* **Validação**: Opcional.
+
+* **Opções Disponíveis**:
+
+  * `Halteres`
+
+  * `Barras`
+
+  * `Máquinas`
+
+  * `Cabos`
+
+  * `Kettlebell`
+
+  * `Elásticos`
+
+  * `TRX`
+
+  * `Bola Suíça`
+
+  * `Step`
+
+  * `Banco`
+
+  * `Nenhum específico`
+
+
+
+### 6.5. Preferes máquinas ou pesos livres?
+
+* **Campo**: Interruptor Booleano (`prefere_maquinas`)
+
+* **Validação**: Opcional.
+
+* **Opções**: `Máquinas` / `Pesos Livres`
+
+
+
+---
+
+
+
+## 🎯 Passo 7: Motivação & Compromisso
+
+* **Objetivo**: Extrair as barreiras mentais, incentivos subjetivos e alinhar expectativas comportamentais.
+
+
+
+### 7.1. Qual a tua motivação principal? ⚠️
+
+* **Campo**: Área de Texto / Textarea (`motivacao_principal`)
+
+* **Validação**: **Obrigatório** (`*`).
+
+* **Instrução / Placeholder**: `"Ex: Quero ter mais energia, melhorar a saúde, preparar-me para um evento..."`
+
+
+
+### 7.2. Qual a tua maior dificuldade/barreira?
+
+* **Campo**: Área de Texto / Textarea (`maior_dificuldade`)
+
+* **Validação**: Opcional.
+
+* **Instrução / Placeholder**: `"Ex: Manter consistência, alimentação, tempo..."`
+
+
+
+### 7.3. Nível de compromisso atual
+
+* **Campo**: Slider / Escala de 1 a 5 (`compromisso`)
+
+* **Valor Padrão**: `3`
+
+* **Legendas extremas**: `"Vou tentar"` (1) ➡️ `"100% comprometido"` (5)
+
+
+
+### 7.4. Observações adicionais
+
+* **Campo**: Área de Texto / Textarea (`observacoes`)
+
+* **Validação**: Opcional.
+
+* **Instrução / Placeholder**: `"Algo mais que queiras partilhar?"`
+
+
+
+---
+
+
+
+## 💡 Campos Obrigatórios Atualizados (Configuração Corrente)
+
+
+
+Após análise e ajuste estratégico, os seguintes campos são **estritamente obrigatórios** e validados a cada passo do Wizard:
+
+1. **Altura** (cm) e **Peso** (kg) no Passo 2 (Medidas).
+
+2. **Lesões anteriores** e **Dores atuais** no Passo 3 (Saúde) — *deve-se marcar as dores/lesões ou explicitamente "Nenhuma"*.
+
+3. **Alergias alimentares** (*deve-se marcar alergias ou "Nenhuma"*) e **Objetivo nutricional** no Passo 5 (Alimentação).
+
+4. **Local de treino** no Passo 6 (Preferências).
+
+5. **Motivação principal** no Passo 7 (Motivação).
+
+
+
+Isso garante um mapeamento robusto do aluno para uma prescrição física e alimentar segura e altamente personalizada.

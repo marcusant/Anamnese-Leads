@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="pt">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>TRINUS · Avaliação Física e Diagnóstico de Treino</title>
+  <meta name="description" content="Responde com calma e sinceridade. Estas informações são a base para montar um plano de treino realmente personalizado para ti. Leva ~5 minutos." />
+  <meta name="robots" content="noindex" />
+
+  <!-- Open Graph (partilha em WhatsApp/Instagram) -->
+  <meta property="og:title" content="TRINUS · A tua avaliação personalizada" />
+  <meta property="og:description" content="Responde a algumas perguntas e recebe um plano feito para ti. ~5 minutos." />
+  <meta property="og:type" content="website" />
+
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
+  <link rel="stylesheet" href="styles.css" />
+</head>
+<body>
+  <main class="shell">
+    <div class="brand">
+      <span class="brand__mark">🔱</span>
+      <span class="brand__name">TRI<span>NUS</span></span>
+    </div>
+
+    <div class="progress">
+      <div class="progress__meta">
+        <span>Passo <strong id="step-now">1</strong> de <span id="step-total">6</span></span>
+        <span id="step-name">Contato</span>
+      </div>
+      <div class="progress__track">
+        <div class="progress__fill" id="progress-fill"></div>
+      </div>
+    </div>
+
+    <section class="card" id="card" aria-live="polite"><!-- preenchido por wizard.js --></section>
+
+    <!-- Honeypot anti-bot (escondido para humanos) -->
+    <div class="hp" aria-hidden="true">
+      <label>Não preencher<input type="text" id="hp-field" tabindex="-1" autocomplete="off" /></label>
+    </div>
+  </main>
+
+  <script type="module" src="wizard.js"></script>
+</body>
+</html>
