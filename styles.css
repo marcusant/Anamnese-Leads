@@ -26,7 +26,11 @@
 
 * { box-sizing: border-box; margin: 0; padding: 0; }
 
-html { -webkit-text-size-adjust: 100%; }
+html {
+  -webkit-text-size-adjust: 100%;
+  /* Controles nativos (select, date, scrollbar) em modo escuro */
+  color-scheme: dark;
+}
 
 body {
   font-family: var(--font-sans);
@@ -34,9 +38,11 @@ body {
   color: var(--foreground);
   line-height: 1.5;
   min-height: 100dvh;
-  /* Atmosfera: halo de marca atrás do cartão */
+  /* Atmosfera TRINUS: preto absoluto + halo violeta da marca (como na app) */
   background-image:
-    radial-gradient(60rem 40rem at 50% -10%, rgba(var(--brand-purple-rgb), 0.18), transparent 60%);
+    radial-gradient(48rem 34rem at 50% -8%, rgba(var(--brand-purple-rgb), 0.22), transparent 62%),
+    radial-gradient(40rem 40rem at 88% 18%, rgba(var(--brand-purple-rgb), 0.08), transparent 60%),
+    radial-gradient(60rem 50rem at 10% 100%, rgba(var(--brand-purple-rgb), 0.06), transparent 60%);
   background-attachment: fixed;
 }
 
@@ -55,17 +61,14 @@ body {
   gap: 0.6rem;
   margin-bottom: 1.5rem;
 }
-.brand__mark {
-  font-size: 1.5rem;
-  line-height: 1;
+.brand__logo {
+  height: 2.5rem;
+  width: auto;
+  object-fit: contain;
+  user-select: none;
+  /* Brilho subtil da marca, como na app */
+  filter: drop-shadow(0 6px 22px rgba(var(--brand-purple-rgb), 0.45));
 }
-.brand__name {
-  font-weight: 800;
-  letter-spacing: 0.18em;
-  font-size: 0.95rem;
-  text-transform: uppercase;
-}
-.brand__name span { color: var(--brand-purple); }
 
 /* ── Barra de progresso ── */
 .progress {
@@ -167,6 +170,24 @@ input:focus, textarea:focus, select:focus {
 input::placeholder, textarea::placeholder { color: var(--muted-foreground); }
 .field--invalid input,
 .field--invalid textarea { border-color: var(--destructive); }
+
+/* Select: fundo sólido escuro (evita o popup branco nativo) */
+select {
+  color-scheme: dark;
+  background-color: var(--card);
+  -webkit-appearance: none;
+  appearance: none;
+  /* seta violeta da marca */
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' fill='none' viewBox='0 0 24 24' stroke='%23715FDB'%3E%3Cpath stroke-linecap='round' stroke-linejoin='round' stroke-width='2' d='M19 9l-7 7-7-7'/%3E%3C/svg%3E");
+  background-repeat: no-repeat;
+  background-position: right 0.7rem center;
+  background-size: 1.1rem;
+  padding-right: 2.4rem;
+}
+select option {
+  background-color: var(--card);
+  color: var(--foreground);
+}
 
 /* telefone composto */
 .phone { display: flex; gap: 0.5rem; }
