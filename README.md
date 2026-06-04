@@ -55,10 +55,12 @@ teu número) ou **Twilio** depois.
 
 ## Publicar a página
 
-É 100% estática — qualquer host serve:
-- Arrasta a pasta para **Netlify Drop**, ou
-- **GitHub Pages**, **Vercel** (static), ou
+É 100% estática e o `index.html` está na **raiz do repositório** (sem subpasta),
+por isso qualquer host serve direto:
+- **Vercel** / **GitHub Pages** / **Netlify** — apontar para a raiz do repo, ou
 - abre `index.html` num servidor local.
+
+> Os specs de origem (Google Forms / app) ficam em `docs/` e não interferem no deploy.
 
 > Os ficheiros usam `type="module"` (import/export), por isso precisa ser
 > servido por **http://** — abrir o ficheiro com `file://` bloqueia os imports.
