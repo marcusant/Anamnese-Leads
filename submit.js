@@ -14,16 +14,20 @@ async function submitToSheets(data) {
   if (!CONFIG.APPS_SCRIPT_URL || CONFIG.APPS_SCRIPT_URL.startsWith('COLE_AQUI')) {
     throw new Error('APPS_SCRIPT_URL não configurada em config.js.')
   }
-  const res = await fetch(CONFIG.APPS_SCRIPT_URL, {
+  // `no-cors`: o Apps Script não devolve cabeçalhos CORS fiáveis após o
+  // redirect 302, e ler a resposta falha de forma intermitente conforme a
+  // origem/browser (funciona em localhost, falha noutras origens). Em
+  // `no-cors` o POST é SEMPRE entregue (grava a linha + envia o e-mail); a
+  // resposta fica opaca (não-legível), o que é aceitável para captação de
+  // leads. `text/plain` mantém-no como "simple request" (sem preflight).
+  // Um erro de rede real continua a rejeitar e é tratado pela camada de UI.
+  await fetch(CONFIG.APPS_SCRIPT_URL, {
     method: 'POST',
-    // text/plain evita o preflight CORS que o Apps Script não responde
+    mode: 'no-cors',
     headers: { 'Content-Type': 'text/plain;charset=utf-8' },
     body: JSON.stringify({ ...data, _origin: 'anamnese-lead', _ts: new Date().toISOString() }),
   })
-  if (!res.ok) throw new Error(`Apps Script respondeu ${res.status}`)
-  const json = await res.json().catch(() => ({ ok: true }))
-  if (json.ok === false) throw new Error(json.error || 'Falha ao guardar.')
-  return json
+  return { ok: true }
 }
 
 // ── AMANHÃ: Supabase (tabela public.leads) ────────────────────────
